@@ -46,7 +46,7 @@ function drawMissiles() {
     });
 }
 function updateMissilepos(){
-    missiles = missiles.map((pos)=>({left:pos.left, top:pos.top-2}));
+    missiles = missiles.map((pos)=>({left:pos.left, top:pos.top-10}));
 }
 function drawEnemies() {
     document.querySelector("#enemies").innerHTML=``;
@@ -56,11 +56,38 @@ function drawEnemies() {
     });
 }
 function updateEnemypos(){
-    enemies = enemies.map((pos)=>({left:pos.left, top:pos.top+2}));
+    enemies = enemies.map((pos)=>({left:pos.left, top:pos.top+0.2}));
+}
+function checkCollisions(){
+    for(let enemy in enemies){
+        for(let missile in missiles){
+            if(
+                missiles[missile].left >= enemies[enemy].left &&
+                missiles[missile].left <= enemies[enemy].left +50 &&
+                missiles[missile].top >= enemies[enemy].top &&
+                missiles[missile].top <= enemies[enemy].top +50
+            ){
+                enemies.splice(enemy,1);
+                missiles.splice(missile,1);
+            }
+            
+        }
+    }
+}
+function gameover(){
+    if(enemies.length===0){
+        const container =document.querySelector("#background");
+        const result = document.createElement("div");
+        result.className="result";
+        result.innerText="🏆You win🏆";
+        container.append(result);
+    }
 }
 setInterval(()=>{
+    checkCollisions();
     updateEnemypos();
     drawEnemies();
     updateMissilepos();
     drawMissiles();
-},1000/2);
+    gameover();
+},1000/60);
