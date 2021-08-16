@@ -45,7 +45,7 @@ function updateEnemypos(){
     enemies = enemies.map((pos)=>({left:pos.left, top:pos.top+0.25}));
 }
  function drawMisiles(){
-     
+     document.querySelector("#missiles").innerHTML=``;
  }
 setInterval(()=>{
     updateEnemypos();
