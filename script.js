@@ -33,6 +33,20 @@ document.onkeydown = function movHero(event) {
         hero.left = hero.left + 10;
         document.querySelector("#hero").style.left = hero.left;
     }
+    if (event.keyCode == spacebar){
+        missiles.push({left:hero.left+20,top:hero.top-20});
+        drawMissiles();
+    }
+}
+function drawMissiles() {
+    document.querySelector("#missiles").innerHTML=``;
+    missiles.forEach((missile) => {
+        document.querySelector("#missiles").innerHTML += `
+        <div class=missile1 style="left:${missile.left}; top:${missile.top}">`;
+    });
+}
+function updateMissilepos(){
+    missiles = missiles.map((pos)=>({left:pos.left, top:pos.top-2}));
 }
 function drawEnemies() {
     document.querySelector("#enemies").innerHTML=``;
@@ -42,12 +56,11 @@ function drawEnemies() {
     });
 }
 function updateEnemypos(){
-    enemies = enemies.map((pos)=>({left:pos.left, top:pos.top+0.25}));
+    enemies = enemies.map((pos)=>({left:pos.left, top:pos.top+2}));
 }
- function drawMisiles(){
-     document.querySelector("#missiles").innerHTML=``;
- }
 setInterval(()=>{
     updateEnemypos();
     drawEnemies();
+    updateMissilepos();
+    drawMissiles();
 },1000/2);
