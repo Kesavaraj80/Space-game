@@ -102,7 +102,7 @@ function gameover(){
         result.className="result";
         result.innerText="You lose";
         container.append(result);
-        enemies=enemies.map((epos)=>({left:epos.left, top:position}));
+        enemies=enemies.map((epos)=>({left:epos.left, top:hero.top}));
     } 
 }
 setInterval(()=>{
@@ -114,9 +114,3 @@ setInterval(()=>{
     gamewin();
     gameover();
 },1000/60);
-
-// buttons//
-function moveleft(){
-    hero.left = hero.left - 10;
-    document.querySelector("#hero").style.left = hero.left;
-}
