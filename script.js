@@ -1,3 +1,7 @@
+var missileLaunch = new Audio();
+missileLaunch.src="music/missile_2.wav";
+var victory = new Audio();
+victory.src= "music/VICTORY SOUND EFFECT.mp3";
 let hero = {
     top: 700,
     left: 575,
@@ -36,6 +40,7 @@ document.onkeydown = function movHero(event) {
     if (event.keyCode == spacebar){
         missiles.push({left:hero.left+20,top:hero.top-20});
         drawMissiles();
+        missileLaunch.play();
     }
 }
 function drawMissiles() {
@@ -56,7 +61,7 @@ function drawEnemies() {
     });
 }
 function updateEnemypos(){
-    enemies = enemies.map((pos)=>({left:pos.left, top:pos.top+0.2}));
+    enemies = enemies.map((pos)=>({left:pos.left, top:pos.top+0.5}));
 }
 function checkCollisions(){
     for(let enemy in enemies){
@@ -74,8 +79,9 @@ function checkCollisions(){
         }
     }
 }
-function gameover(){
+function gamewin(){
     if(enemies.length===0){
+        victory.play();
         const container =document.querySelector("#background");
         const result = document.createElement("div");
         result.className="result";
@@ -83,11 +89,34 @@ function gameover(){
         container.append(result);
     }
 }
+function gameover(){
+    for(let enemy in enemies){
+        if(enemies[enemy].top===hero.top){
+            position = hero.top; 
+        }
+    }
+    console.log(position)
+    if(position===hero.top){
+        const container =document.querySelector("#background");
+        const result = document.createElement("div");
+        result.className="result";
+        result.innerText="You lose";
+        container.append(result);
+        enemies=enemies.map((epos)=>({left:epos.left, top:position}));
+    } 
+}
 setInterval(()=>{
     checkCollisions();
     updateEnemypos();
     drawEnemies();
     updateMissilepos();
     drawMissiles();
+    gamewin();
     gameover();
 },1000/60);
+
+// buttons//
+function moveleft(){
+    hero.left = hero.left - 10;
+    document.querySelector("#hero").style.left = hero.left;
+}
