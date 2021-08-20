@@ -87,6 +87,13 @@ function gamewin(){
         result.className="result";
         result.innerText="🏆You win🏆";
         container.append(result);
+        clearInterval(game);
+        stopmove();
+    }
+}
+function stopmove(){
+    document.onkeydown = function movHero(event) {
+        return false
     }
 }
 function gameover(){
@@ -102,10 +109,11 @@ function gameover(){
         result.className="result";
         result.innerText="You lose";
         container.append(result);
-        enemies=enemies.map((epos)=>({left:epos.left, top:hero.top}));
+        clearInterval(game);
+        stopmove();
     } 
 }
-setInterval(()=>{
+let game =setInterval(()=>{
     checkCollisions();
     updateEnemypos();
     drawEnemies();
