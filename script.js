@@ -107,7 +107,7 @@ function gameover(){
         const container =document.querySelector("#background");
         const result = document.createElement("div");
         result.className="result";
-        result.innerText="You lose";
+        result.innerText="Game Over";
         container.append(result);
         clearInterval(game);
         stopmove();
