@@ -1,7 +1,9 @@
 var missileLaunch = new Audio();
 missileLaunch.src="music/missile_2.wav";
 var victory = new Audio();
-victory.src= "music/VICTORY SOUND EFFECT.mp3";
+victory.src= "music/gamewin.wav";
+var over= new Audio();
+over.src="music/gameover.wav"
 let hero = {
     top: 700,
     left: 575,
@@ -104,6 +106,7 @@ function gameover(){
     }
     console.log(position)
     if(position===hero.top){
+        over.play();
         const container =document.querySelector("#background");
         const result = document.createElement("div");
         result.className="result";
